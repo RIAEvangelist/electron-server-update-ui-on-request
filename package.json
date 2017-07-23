@@ -1,0 +1,14 @@
+{
+    "name": "electron-server",
+    "dependencies": {
+        "electron": "^1.7.5"
+    },
+    "scripts": {
+        "start": "electron ."
+    },
+    "main": "main.js",
+    "version": "0.0.0",
+    "license": "Unlicense",
+    "description": "simple server example that updates text based on http request",
+    "author": "diginow"
+}
