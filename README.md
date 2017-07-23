@@ -8,3 +8,5 @@ I am using electron v1.6.10 and npm v5.3.0 on Rasbian Jessie.
 
 ***me :***
 Here you go ;)
+
+![server updating example](https://raw.githubusercontent.com/RIAEvangelist/electron-server-update-ui-on-request/master/image/electron-server-update-ui-on-http-request-to-it.png)
