@@ -1,7 +1,8 @@
 {
     "name": "electron-server",
     "dependencies": {
-        "electron": "^1.7.5"
+        "electron": "^1.6.11",
+        "node-http-server": "^6.2.1"
     },
     "scripts": {
         "start": "electron ."

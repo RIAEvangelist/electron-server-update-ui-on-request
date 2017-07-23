@@ -1,6 +1,7 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
+const server=require('node-http-server');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,7 +19,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  //win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -53,3 +54,42 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+const config=new server.Config;
+
+config.verbose=true;
+config.port=8000;
+server.onRequest=onRequest;
+
+//this happens immediately when the
+function onRequest(request,response,serve){
+
+    //have a look at the request
+    console.log(request);
+
+    const query=request.uri.query;
+    let success=false;
+
+    //lets only send the info to the window if there is a querystring
+    //with a text key
+    if(query.text){
+      success=true;
+      win.webContents.send('request', query);
+    }
+
+    //bypass normal server flow and serve direcly here.
+    serve(
+        request,
+        response,
+        JSON.stringify(
+            {
+                success:success
+            }
+        )
+    );
+
+    //return true to signal the server that you have completed the request
+    //and it can ignore the rest of the request lifecycle.
+    return true;
+}
+
+server.deploy(config);

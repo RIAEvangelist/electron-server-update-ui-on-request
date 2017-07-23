@@ -3,11 +3,44 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <script>
+
+      const electron=require('electron');
+      //lets keep track of the requests.
+      let requestCount=0;
+
+      electron.ipcRenderer.on(
+        'request',
+        function (e, query) {
+
+          //lets take a look at the query
+          console.log(query);
+
+          //if we have a text key add it to the text box
+          if(query.text){
+            const textbox=document.querySelector('#requests').appendChild(
+              buildText(query.text)
+            )
+          }
+        }
+      );
+
+      function buildText(text){
+        const textItem=document.createElement('li');
+        textItem.innerText=text;
+        return textItem;
+      }
+
+    </script>
+    <style>
+      .list{
+        display:flex;
+        flex-direction: column-reverse;
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chrome <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <h1>Listening on localhost:8000</h1>
+    <ol id='requests' class='list'></ol>
   </body>
 </html>
